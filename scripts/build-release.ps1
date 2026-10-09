@@ -1,4 +1,4 @@
-param([string]$Version='v0.1.0',[string]$GoExecutable='go')
+param([string]$Version='v0.1.1',[string]$GoExecutable='go')
 $ErrorActionPreference='Stop'
 if($Version -notmatch '^v[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9.-]+)?$'){throw 'Invalid version'}
 $root=Split-Path -Parent $PSScriptRoot

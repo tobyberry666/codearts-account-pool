@@ -8,7 +8,7 @@
 
 ## Windows：下载后双击安装
 
-1. 从 [Releases](https://github.com/tobyberry666/codearts-account-pool/releases) 下载 `codearts-account-pool-v0.1.0-windows-amd64.zip`，完整解压到任意目录。GitHub 的 Source code ZIP 不含可执行程序。
+1. 从 [Releases](https://github.com/tobyberry666/codearts-account-pool/releases) 下载 `codearts-account-pool-v0.1.1-windows-amd64.zip`，完整解压到任意目录。GitHub 的 Source code ZIP 不含可执行程序。
 2. 双击 `Install.cmd`。默认安装到 `%USERPROFILE%\.codearts2api`，生成随机本地 API Key，并创建桌面上的启动、停止、账号管理入口。正常安装使用当前用户后台任务，不安装系统服务。
 3. 双击 **CodeArts 账号管理.cmd**，选 `1` 添加账号。添加不同账号前，在浏览器退出当前华为账号。密码和验证码只填写在官方登录页面。每个账号需拥有相应模型权益；重复登录不会增加额度。
 4. 在客户端填写下表。密钥在安装目录的 `connection.txt`，不要把这个文件发给别人。
@@ -65,7 +65,7 @@ flowchart LR
 go test ./...
 go build -o bin/codearts2api.exe ./cmd/server
 go build -o bin/codearts-login.exe ./cmd/login
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-release.ps1 -Version v0.1.0
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-release.ps1 -Version v0.1.1
 ```
 
 构建脚本会运行测试，再生成 Windows ZIP 和 `SHA256SUMS.txt`。发布脚本只复制明确允许的程序与文档，不打包 `auths`、`data`、`config.json`、日志或个人连接信息。源码包由已审查的 Git 提交生成。

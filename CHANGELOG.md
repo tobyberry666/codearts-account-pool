@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.1
+
+- Normalize Windows 8.3 temporary paths in installer tests before comparing configuration paths. Unicode path checks remain enabled.
+
 ## v0.1.0
 
 - Persistent local account identities prevent credential overwrite when OAuth omits cloud identity fields.
