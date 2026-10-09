@@ -2,6 +2,7 @@ param([Parameter(Mandatory=$true)][string]$BundleDir)
 $ErrorActionPreference='Stop'
 $testRoot=Join-Path $env:TEMP ('codearts-package-test-'+[guid]::NewGuid().ToString('N'))
 $profileDir=Join-Path $testRoot 'profile with spaces 中文'
+$profileDir=[IO.Path]::GetFullPath($profileDir)
 $installer=Join-Path $BundleDir 'windows\install.ps1'
 if(!(Test-Path -LiteralPath $installer)){throw 'Missing portable installer'}
 & $installer -ProfileDir $profileDir -PrepareOnly
@@ -9,12 +10,7 @@ if($LASTEXITCODE -and $LASTEXITCODE -ne 0){throw 'Installer failed'}
 $configFile=Join-Path $profileDir 'config.json'
 $cfg=Get-Content -LiteralPath $configFile -Raw -Encoding UTF8 | ConvertFrom-Json
 if($cfg.listen -ne '127.0.0.1:7866' -or $cfg.max_concurrent -ne 1 -or $cfg.api_key.Length -lt 32){throw 'Invalid safe defaults'}
-if($cfg.auth_dir -ne (Join-Path $profileDir 'auths') -or $cfg.state_file -ne (Join-Path $profileDir 'data\state.json')){
- foreach($path in @($profileDir,$cfg.auth_dir,$cfg.state_file)){
-  Write-Host ('Path codepoints: '+(($path.ToCharArray() | ForEach-Object {([int]$_).ToString('X4')}) -join ' '))
- }
- throw 'Unicode configuration paths were corrupted'
-}
+if($cfg.auth_dir -ne (Join-Path $profileDir 'auths') -or $cfg.state_file -ne (Join-Path $profileDir 'data\state.json')){throw 'Unicode configuration paths were corrupted'}
 foreach($file in @('bin\codearts2api.exe','bin\codearts-login.exe','start-proxy.ps1','run-proxy-task.ps1','manage-accounts.ps1','stop-proxy.ps1','task-common.ps1','connection.txt')){
  if(!(Test-Path -LiteralPath (Join-Path $profileDir $file))){throw ('Missing installed file: '+$file)}
 }
